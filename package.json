@@ -1,0 +1,11 @@
+{
+  "name": "super-chat",
+  "version": "0.1.0",
+  "dependencies": {
+    "express": "~4.17.1",
+    "socket.io": "~2.3.0",
+    "ent": "~2.2.0"
+  },
+  "author": "aribot <alexisribot10@gmail.com>",
+  "description": "Chat avec socket.io"
+}

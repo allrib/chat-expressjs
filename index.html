@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Real time chat ! </title>
+    <style>
+        #chat_area strong {
+            color: white;
+            background-color: black;
+            padding: 2px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Real time chat !</h1>
+
+<form action="/" method="post" id="form_chat">
+    <label for="message">
+        <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+    </label>
+    <input type="submit" id="send_message" value="Send" />
+</form>
+
+<section id="chat_area">
+
+</section>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    var MESSAGE_SEL = $('#message');
+    var CHAT_SEL = $('#chat_area');
+    var socket = io.connect('http://localhost:8080');
+
+    var pseudo = prompt('What is your pseudo ?');
+    socket.emit('new_client', pseudo);
+    document.title = pseudo + ' - ' + document.title;
+
+    socket.on('message', function(data) {
+        insertMessage(data.pseudo, data.message)
+    })
+
+    socket.on('new_client', function(pseudo) {
+        CHAT_SEL.prepend('<p><em>' + pseudo + ' has join the chat !</em></p>');
+    });
+
+    $('#form_chat').submit(function () {
+        var message = MESSAGE_SEL.val();
+        socket.emit('message', message);
+        insertMessage(pseudo, message);
+        MESSAGE_SEL.val('').focus();
+        return false;
+    });
+
+    function insertMessage(pseudo, message) {
+        if (message !== '') {
+            CHAT_SEL.prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
+        }
+    }
+</script>
+</body>
+</html>
