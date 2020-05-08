@@ -35,7 +35,10 @@
     var CHAT_SEL = $('#chat_area');
     var socket = io.connect('http://localhost:8080');
 
-    var pseudo = prompt('What is your pseudo ?');
+    do {
+        var pseudo = prompt('What is your pseudo ?');
+    } while(pseudo == null || pseudo === "" );
+
     socket.emit('new_client', pseudo);
     document.title = pseudo + ' - ' + document.title;
 
