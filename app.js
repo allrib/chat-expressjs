@@ -18,6 +18,9 @@ io.sockets.on('connection', function (socket, pseudo) {
         message = ent.encode(message);
         socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
     });
-});
 
+    socket.on("disconnect", function() {
+        socket.broadcast.emit('bye_client', socket.pseudo);
+    });
+});
 server.listen(8080);

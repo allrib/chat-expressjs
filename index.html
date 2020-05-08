@@ -47,6 +47,10 @@
         CHAT_SEL.prepend('<p><em>' + pseudo + ' has join the chat !</em></p>');
     });
 
+    socket.on('bye_client', function(pseudo) {
+        CHAT_SEL.prepend('<p><em>' + pseudo + ' has left the chat !</em></p>');
+    });
+
     $('#form_chat').submit(function () {
         var message = MESSAGE_SEL.val();
         socket.emit('message', message);
