@@ -1,3 +1,3 @@
-# First Node application
+# First Node application (express)
 
-Just run npm install
+Run `npm install` and `node app.js` for launching it up
